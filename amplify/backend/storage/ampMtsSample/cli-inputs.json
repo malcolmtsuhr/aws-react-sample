@@ -1,0 +1,14 @@
+{
+  "resourceName": "ampMtsSample",
+  "policyUUID": "30baeb29",
+  "bucketName": "awsreactsample225956215f2f4286964b396e10a29a0c",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
