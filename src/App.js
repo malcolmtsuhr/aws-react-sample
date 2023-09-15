@@ -15,6 +15,7 @@ import {
 import { listNotes } from "./graphql/queries";
 import {
   createNote as createNoteMutation,
+  updateNote as updateNoteMutation,
   deleteNote as deleteNoteMutation,
 } from "./graphql/mutations";
 
@@ -52,6 +53,24 @@ const App = ({ signOut }) => {
     if (!!data.image) await Storage.put(data.name, image);
     await API.graphql({
       query: createNoteMutation,
+      variables: { input: data },
+    });
+    fetchNotes();
+    event.target.reset();
+  }
+
+  async function updateNote(event) {
+    event.preventDefault();
+    const form = new FormData(event.target);
+    const image = form.get("image");
+    const data = {
+      name: form.get("name"),
+      description: form.get("description"),
+      image: image.name,
+    };
+    if (!!data.image) await Storage.put(data.name, image);
+    await API.graphql({
+      query: updateNoteMutation,
       variables: { input: data },
     });
     fetchNotes();
@@ -112,7 +131,9 @@ async function deleteNote({ id, name }) {
             <Text as="strong" fontWeight={700}>
               {note.name}
             </Text>
-            <Text as="span">{note.description}</Text>
+            <Text as="span">
+              {note.description}
+            </Text>
             {note.image && (
             <Image
               src={note.image}
